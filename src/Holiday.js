@@ -48,16 +48,18 @@ function SelectCountry ({ country, countries, setCountry }) {
 }
 
 export function Holiday () {
-  const [country, setCountry] = useState('ID')
-
+  const [country, setCountry] = useState('ID');
   const holiday = new Holidays(country);
   const countries = holiday.getCountries('en');
+  
 
   const language = selectLanguage(holiday.getLanguages())
   holiday.setLanguages(language)
 
   const list = holiday.getHolidays();
 
+  // countryDetails.countryName =  country;
+ 
   return (
     <>
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'></link>
@@ -80,7 +82,7 @@ export function Holiday () {
           <h3><span style={{backgroundColor:"white", borderRadius:"10px", paddingLeft:"10px", paddingRight:"10px"}}>List of Public Holidays</span></h3>
         </div>
    
-          <SelectCountry country={country} countries={countries} setCountry={setCountry} />
+          <SelectCountry country={country} countries={countries} setCountry={setCountry}></SelectCountry>
           <table className="holidays" cellPadding={5} style={{padding:"10px", width:"50%", margin:"auto", textAlign:"left"}}>
             <thead>
               <tr>

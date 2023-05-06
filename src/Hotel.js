@@ -3,8 +3,8 @@ import axios from "axios";
 
 export function Hotel(){
     const [area, setArea] = useState("");
-    const [lat, setLatitude] = useState(-6.2088);
-    const [lng, setLongitude] = useState(106.8456);
+    const [lat, setLatitude] = useState(-6.2146);
+    const [lng, setLongitude] = useState(106.8451);
   
     var [arr, setArray] = useState([]);
     var [location, setLocation] = useState([]);
@@ -230,5 +230,4 @@ export function Hotel(){
   
     
   }
-
 
