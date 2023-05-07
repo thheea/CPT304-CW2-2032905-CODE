@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-export function SelectDate(){
-  
+export function SelectDate(){ // select date for weather information
   const [date, setDate]=useState();
   console.log("Date", date);
-
   return(
     <>
     <h3 style={{ marginTop: "30px"}}>Date: {date}</h3>
@@ -18,10 +16,10 @@ export function Weather(){
   
   const [temperature, setTemperature] = useState(null);
   const [description, setDescription] = useState(null);
-  const [city, setCity] = useState("Jakarta");
-  const [country, setCountry] = useState("Indonesia");
-  const [latitude, setLatitude] = useState('Latitude');
-  const [longitude, setLongitude] = useState('Longitude');
+  const [city, setCity] = useState("Jakarta"); // set default city to Jakarta
+  const [country, setCountry] = useState("Indonesia"); // set default country to Indonesia
+  const [latitude, setLatitude] = useState('Latitude'); // latitude variable set to retrieve geocoding results
+  const [longitude, setLongitude] = useState('Longitude'); // longitude variable set to retrieve geocoding results 
 
   const getWeather = (city, country) => {
     axios({
@@ -30,11 +28,11 @@ export function Weather(){
     })
       .then((response) => {
         console.log(response.data.main.temp);
-        setTemperature(response.data.main.temp - 273.15);
+        setTemperature(response.data.main.temp - 273.15); // convert temperature to celcius
         setDescription(response.data.weather[0].main);      
-        setLatitude(response.data.coord.lat);
-        setLongitude(response.data.coord.lon);  
-        getForecast(latitude, longitude);
+        setLatitude(response.data.coord.lat); // retrieve latitude from built in geocoding API
+        setLongitude(response.data.coord.lon); // retrieve longitude from built in geocoding API
+        getForecast(latitude, longitude); // retrieve the five-day forecast
       })
       .catch((error) => {
         console.log(error);
@@ -42,9 +40,9 @@ export function Weather(){
       });
   };
 
-  const [temp, setTemp] = useState([]);
+  const [temp, setTemp] = useState([]); // array of temperatures for the five-day forecast
 
-  const getForecast = (lat, lon) => {
+  const getForecast = (lat, lon) => { // five-day forecast
     axios({
       method: "GET",
       url: `http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=180941f68139fba12f166dc35d9b688b`,
@@ -54,7 +52,7 @@ export function Weather(){
         console.log(response.data);
         var tempList = []
         for (let i = 0; i < 40; i += 8){
-            tempList.push(response.data.list[i].main.temp - 273.15);
+            tempList.push(response.data.list[i].main.temp - 273.15); // convert temperature to celcius
             // descList.push(response.data.list[i].weather[i].main);
             // dateList.push((response.data.list[i].dt_txt.split(" "))[i]);
         }
@@ -84,12 +82,11 @@ export function Weather(){
             fontSize: "32px",
             color: "black",
             marginTop: "20px"
-          }}
+          }} // header
         >
           <h3><span style={{backgroundColor:"white", borderRadius:"10px", paddingLeft:"10px", paddingRight:"10px"}}>Weather Forecast</span></h3>
         </div>
 
-    
         <SelectDate/>
 
         <div style={{ marginBottom: "20px", marginTop:"30px"}}>
@@ -214,5 +211,3 @@ export function Weather(){
   );
   
 }
-
-// render((<Weather/>), document.querySelector("#root"));

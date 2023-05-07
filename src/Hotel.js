@@ -3,23 +3,22 @@ import axios from "axios";
 
 export function Hotel(){
     const [area, setArea] = useState("");
-    const [lat, setLatitude] = useState(-6.2146);
-    const [lng, setLongitude] = useState(106.8451);
+    const [lat, setLatitude] = useState(-6.2146); // set default latitude
+    const [lng, setLongitude] = useState(106.8451); // set default longitude
   
-    var [arr, setArray] = useState([]);
-    var [location, setLocation] = useState([]);
-    var [star, setStar] = useState([]);
-    var [ranking, setRanking] = useState([]);
+    var [name, setName] = useState([]);  // array to store list of hotel names
+    var [location, setLocation] = useState([]); // array to store list of hotel locations
+    var [star, setStar] = useState([]); // array to store list of hotel star ratings
+    var [ranking, setRanking] = useState([]); // array to store list of hotel rankings
   
     const getHotel = (lat, lng) => {
       axios({
         method: 'GET',
         url: 'https://travel-advisor.p.rapidapi.com/hotels/list-by-latlng',
         params: {
-          latitude: lat,
+          latitude: lat, 
           longitude: lng,
-          
-          limit: '5',
+          limit: '5', // limit the hotels to only top 5 hotels within the area
           currency: 'USD',
           subcategory: 'hotel,bb,specialty'
         },
@@ -31,8 +30,7 @@ export function Hotel(){
       })
         .then((response) => {
           console.log(response.data);
-          setArea(response.data.data[0].location_string);
-         
+          setArea(response.data.data[0].location_string); // retrieve geocoded location or area 
           var hotelList = []
           var locationList = []
           var starList = []
@@ -43,7 +41,7 @@ export function Hotel(){
             starList.push(response.data.data[i].hotel_class)
             rankingList.push(response.data.data[i].ranking)
           }
-          setArray(hotelList);
+          setName(hotelList);
           setLocation(locationList);
           setStar(starList);
           setRanking(rankingList);
@@ -71,7 +69,7 @@ export function Hotel(){
             fontSize: "32px",
             color: "black",
             marginTop: "60px"
-          }}
+          }} // header
         >
         <h3><span style={{backgroundColor:"white", borderRadius:"10px", paddingLeft:"10px", paddingRight:"10px"}}>Find Hotels Near You!</span></h3>
         </div>
@@ -176,7 +174,7 @@ export function Hotel(){
                 borderTop:"1px solid white"
 
             }}>
-            <td>{arr[0]}</td>
+            <td>{name[0]}</td>
             <td>{location[0]}</td>
             <td>{star[0]}</td>
             <td>{ranking[0]}</td>
@@ -185,7 +183,7 @@ export function Hotel(){
                 borderTop:"1px solid white"
 
             }}>
-            <td>{arr[1]}</td>
+            <td>{name[1]}</td>
             <td>{location[1]}</td>
             <td>{star[1]}</td>
             <td>{ranking[1]}</td>
@@ -194,7 +192,7 @@ export function Hotel(){
                 borderTop:"1px solid white"
 
             }}>
-            <td>{arr[2]}</td>
+            <td>{name[2]}</td>
             <td>{location[2]}</td>
             <td>{star[2]}</td>
             <td>{ranking[2]}</td>
@@ -203,7 +201,7 @@ export function Hotel(){
                 borderTop:"1px solid white"
 
             }}>
-            <td>{arr[3]}</td>
+            <td>{name[3]}</td>
             <td>{location[3]}</td>
             <td>{star[3]}</td>
             <td>{ranking[3]}</td>
@@ -212,17 +210,13 @@ export function Hotel(){
                 borderTop:"1px solid #e6e6e6"
 
             }}>
-            <td>{arr[4]}</td>
+            <td>{name[4]}</td>
             <td>{location[4]}</td>
             <td>{star[4]}</td>
             <td>{ranking[4]}</td>
         </tr>    
         </table>
-        </body>
-  
-
-  
-      
+        </body>      
        
       </>
   
